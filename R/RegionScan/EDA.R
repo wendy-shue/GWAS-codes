@@ -1,11 +1,17 @@
 library(RegionScan)
 data("REGIONinfo","SNPinfo","phenocov","geno")
 
-results<-regscan(phenocov = phenocov, pheno="sim_QT", REGIONinfo=REGIONinfo,
+results_cont <-regscan(phenocov = phenocov, pheno="sim_QT", REGIONinfo=REGIONinfo,
                  geno_type="D", pheno_type="C", data = geno, SNPinfo = SNPinfo )
 
+results_bin <-regscan(phenocov = phenocov, pheno="sim_bin", REGIONinfo=REGIONinfo,
+                       geno_type="D", pheno_type="D", data = geno, SNPinfo = SNPinfo )
+
 # locus plot 
-LocusPlot(chr=16,pheno="sim_QT",regscanout=results,regionlist=c(1:15),outname="output/RegionScan/LocusPlot_region1_15",
+LocusPlot(chr=16,pheno="sim_QT",regscanout=results_cont,regionlist=c(1:15),outname="output/RegionScan/LocusPlot_region1_15",
+          region_tests=c("Wald.p","PC80.p","MLCB.p","SKATO.p"))
+
+LocusPlot(chr=16,pheno="sim_QT",regscanout=results_bin,regionlist=c(1:15),outname="output/RegionScan/LocusPlot_region1_15_bin",
           region_tests=c("Wald.p","PC80.p","MLCB.p","SKATO.p"))
 
 regscan <- function (phenocov = NULL, pheno, REGIONinfo, geno_type, pheno_type, 
